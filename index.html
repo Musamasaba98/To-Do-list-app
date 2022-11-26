@@ -5,10 +5,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TO-DO App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
     <link rel="stylesheet" href="dist/style/style.css">
 </head>
-<body>
- 
+<body>    
+<main class="container">
+    
+    <section class="main-section">
+        <div class="alert">Add task </div>
+        <h1>TO-DO LIST APP</h1>
+      <div class="main-section__input">
+      <form action="" method="get" id="form">
+        <input type="text" name="text" id="text" class="text" placeholder="Task to do..."> 
+      </form>  
+       <button class="btn">ADD TASK</button>
+    </div>
+    <div class="todo-tasks">
+        <div class="todo-tasks__heading">
+            <h2>TODO TASKS</h2>
+            <h4>DATE: <span id="date"></span></h4>
+        </div>
+        <div class="todo-tasks__todos">
+            <ul id="lists"></ul>
+        </div>
+    </div>  
+    </section>
+    <aside class="aside-section">
+    </aside> 
+</main> 
+
 <script src="dist/js/script.js"></script>    
 </body>
 </html>

@@ -1,0 +1,138 @@
+:root{
+    --image:url("../images/todo.jpg");
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background-image:var(--image) ;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+}
+button {
+    background: transparent;
+    border: none;
+    outline: none;
+  }
+i{
+    padding:0 .5rem;
+}  
+h1{
+    color: black;
+    font-weight: bolder;
+    margin-bottom: 1rem;
+    font-size: 3rem;
+} 
+li{
+    list-style-type: none;
+    background: #3D70F1;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: .8rem 1rem;
+    margin: .5rem .5rem;
+    border-radius: .5rem;
+    font-size: 1.2rem;
+    max-width: 100%;
+} 
+.list-item div{
+    display: flex;
+}
+.main-section{
+    margin: 2rem auto;
+    max-width: 100vw;
+}  
+.main-section__input{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.container{
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row-reverse;
+
+}
+.text{
+    width: 100%;
+  	height: 30px;
+  	padding: 3px;
+  	font-size: 1.2rem;
+    color: rgba(48, 43, 43, 0.952);
+    outline: 0;
+    border: none;
+    background: none;
+  	border-bottom: 3px solid #3D70F1;
+}
+input:focus{
+    background: none;
+}
+.editInput{
+    width:15rem;
+    padding: 2px;
+    font-size: 1.2rem;
+    color: whitesmoke;
+    outline: 0;
+    border: none;
+    background: none;
+    border-bottom: 2px solid rgba(48, 43, 43, 0.952); 
+    display: none; 
+}
+.btn{
+    display: inline;
+    color: whitesmoke;
+    font-weight: bolder;
+    background: #3D70F1;
+    padding: .5rem 1rem;
+    border: 2px solid whitesmoke;
+    border-radius: 1rem;
+}
+.editBtn{
+    display: none;
+    color: whitesmoke;
+    padding: .3rem .5rem;
+    border: 2px solid whitesmoke;
+    border-radius: 1rem;
+}
+.todo-tasks{
+    margin-top: 1rem;
+}
+.todo-tasks__heading{
+    display: flex;
+    justify-content: space-between;
+    color: black;
+}
+.todo-tasks__heading h4{
+    line-height: 1.8rem;
+}
+.todo-tasks span{
+    font-style: italic;
+}
+.fa-pen-to-square{
+    color: rgb(112, 218, 129);
+    font-size: 1.5rem;
+}
+.fa-trash-can{
+    color: rgb(219, 126, 19);
+    font-size: 1.5rem;
+}
+.aside-section{
+    display: block;
+    background-color: aliceblue;
+    height: 100vh;
+    width: 30%;
+}
+.alert{
+    display: none;
+    background-color: red;
+    color: white;
+    font-size: 1.5rem;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    text-align: center;
+    transition: all 500ms ease-in-out;
+}
