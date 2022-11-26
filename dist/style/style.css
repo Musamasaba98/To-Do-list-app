@@ -121,7 +121,7 @@ input:focus{
     font-size: 1.5rem;
 }
 .aside-section{
-    display: block;
+    display: none;
     background-color: aliceblue;
     height: 100vh;
     width: 30%;
