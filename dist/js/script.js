@@ -182,10 +182,29 @@ lists.addEventListener('click',(e)=>{
         //checkbox state
         let checkBoxState=e.target.checked;
         let text=e.target.parentElement.parentElement.childNodes[1];
+        let todoText=text.textContent
         if (checkBoxState===true) { 
-            text.style.textDecoration="line-through"
+            text.style.textDecoration = "line-through";
+            todos.forEach(element=> {
+              if (element.text === todoText) {
+                element.checked = true;
+                localStorage.setItem(
+                  "Mon",
+                  JSON.stringify({ todos: todos})
+                );
+              }
+            });
         }else{
             text.style.textDecoration="none"
+            todos.forEach(element=> {
+                if (element.text === todoText) {
+                  element.checked = false;
+                  localStorage.setItem(
+                    "Mon",
+                    JSON.stringify({ todos: todos})
+                  );
+                }
+              });
         }
     }
 })
