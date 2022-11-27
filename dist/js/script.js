@@ -1,3 +1,6 @@
+window.onload=function loadTodos() {
+    loadTodosFromLocalStorage()
+}
 const date=document.querySelector("#date")
 const btn=document.querySelector(".btn")
 const lists=document.querySelector("#lists")
@@ -12,6 +15,9 @@ let currentEditValue=""
 //array of todos
 let todos=[]
 
+// (function getTodoItems(){
+//    console.log(localStorage.getItem('Mon') ? JSON.parse(localStorage.getItem('Mon')) : '') 
+// })()
 //function that creates list element
 let listElement=(todo_task)=>{
     let task=document.createElement('li');
@@ -64,10 +70,22 @@ const add=()=>{
           let stringToConvert = input.value;
           stringToConvert = stringToConvert
             .toLowerCase()
-            .replace(/(^|\s)\S/g, (L) => L.toUpperCase());
+            .replace(/(^|\s)\S/, (L) => L.toUpperCase());
           if (!todos.includes(stringToConvert)) {
             todos.push(stringToConvert);
             listElement(todos[todos.length - 1]);
+            if (todos.length>0) {
+                if (localStorage.length<=0) {
+                    localStorage.setItem('Mon', JSON.stringify({todos:todos}));
+                }else{
+                    let addToLocalStorage=todos[todos.length - 1]
+                    let currentStorageItems=JSON.parse(localStorage.getItem('Mon'))
+                    let arrayOfTodos=currentStorageItems.todos
+                    let newTodosArray=arrayOfTodos.concat(addToLocalStorage)
+                    localStorage.setItem('Mon',JSON.stringify({todos:newTodosArray}))
+                }
+                  
+              }
           } else {
             alert.innerHTML = "Task already added";
             alert.style.display = "block";
@@ -76,6 +94,16 @@ const add=()=>{
        
       } 
 })  
+}
+const loadTodosFromLocalStorage=()=>{
+    let currentStorageItems=JSON.parse(localStorage.getItem('Mon'))
+    let arrayOfTodos=currentStorageItems.todos
+    todos=arrayOfTodos
+    if (todos.length) {
+        todos.forEach(element => {
+            listElement(element)
+        });
+    }
 }
 //edit todo
 lists.addEventListener('click',(e)=>{
@@ -86,7 +114,6 @@ lists.addEventListener('click',(e)=>{
         editInput.style.display="block";
         button.style.display="block"
         editInput.value=e.target.parentElement.parentElement.childNodes[0].textContent
-        console.log(e.target.parentElement.parentElement.firstChild.lastChild.textContent)
         e.target.parentElement.parentElement.firstChild.lastChild.textContent=""
         currentEditValue=text.value
     }
@@ -99,7 +126,7 @@ lists.addEventListener('click',(e)=>{
            let value=editInput.value;
            value=value
            .toLowerCase()
-           .replace(/(^|\s)\S/g, (L) => L.toUpperCase());
+           .replace(/(^|\s)\S/, (L) => L.toUpperCase());
            e.target.parentElement.childNodes[0].childNodes[1].textContent=value;
            editInput.style.display="none";
            button.style.display="none"
@@ -109,6 +136,7 @@ lists.addEventListener('click',(e)=>{
             e.target.parentElement.childNodes[0].childNodes[1].style.textDecoration="none"
             let index=todos.indexOf(currentEditValue)
             todos.splice(index,1,value)
+            localStorage.setItem('Mon',JSON.stringify({todos:todos}))
            }
            
         }   
@@ -120,6 +148,7 @@ lists.addEventListener('click',(e)=>{
         let text=e.target.parentElement.parentElement.innerText
         let index=todos.indexOf(text);
         todos.splice(index,1)
+        localStorage.setItem('Mon',JSON.stringify({todos:todos}))
         e.target.parentElement.parentElement.remove()
     }
 })
