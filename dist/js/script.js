@@ -15,10 +15,21 @@ let todos=[]
 //function that creates list element
 let listElement=(todo_task)=>{
     let task=document.createElement('li');
+    let label=document.createElement('label');
+    let checkmark=document.createElement('span');
+    let check=document.createElement('input');
+    let cover=document.createElement('span')
+    let upperDiv=document.createElement('div')
     let icons=document.createElement('div')
+    check.setAttribute('type','checkbox')
     let editInput=document.createElement('input')
     editInput.setAttribute('type', 'text');
     editInput.className = "editInput";
+    upperDiv.className="check-text"
+    label.className="container"
+    checkmark.className="checkmark"
+    cover.className="item-text"
+    check.className="custom-checkbox"
     let button=document.createElement('button')
     button.className = "editBtn";
     button.innerHTML="Edit"
@@ -26,7 +37,12 @@ let listElement=(todo_task)=>{
     icons.innerHTML+='<i class="fa-solid fa-trash-can"></i>'
     task.classList.add('list-item')
     lists.appendChild(task);
-    task.textContent=todo_task;
+    label.appendChild(check)
+    label.appendChild(checkmark)
+    upperDiv.appendChild(label)
+    upperDiv.appendChild(cover)
+    cover.textContent=todo_task;
+    task.appendChild(upperDiv)
     task.appendChild(editInput)
     task.appendChild(button)
     task.appendChild(icons);
@@ -70,7 +86,7 @@ lists.addEventListener('click',(e)=>{
         editInput.style.display="block";
         button.style.display="block"
         editInput.value=e.target.parentElement.parentElement.childNodes[0].textContent
-        e.target.parentElement.parentElement.childNodes[0].textContent=""
+        document.querySelector("#lists > li > div.check-text > span").textContent=""
         currentEditValue=text.value
     }
 })
@@ -83,11 +99,17 @@ lists.addEventListener('click',(e)=>{
            value=value
            .toLowerCase()
            .replace(/(^|\s)\S/g, (L) => L.toUpperCase());
-           e.target.parentElement.childNodes[0].textContent=value;
+           e.target.parentElement.childNodes[0].childNodes[1].textContent=value;
            editInput.style.display="none";
            button.style.display="none"
-           let index=todos.indexOf(currentEditValue)
-           todos.splice(index,1,value)
+           
+           if (currentEditValue!==value) {
+            e.target.parentElement.childNodes[0].childNodes[0].childNodes[0].checked=false
+            e.target.parentElement.childNodes[0].childNodes[1].style.textDecoration="none"
+            let index=todos.indexOf(currentEditValue)
+            todos.splice(index,1,value)
+           }
+           
         }   
     }
 })
@@ -101,7 +123,18 @@ lists.addEventListener('click',(e)=>{
     }
 })
 //completed tasks
-
+lists.addEventListener('click',(e)=>{
+    if (e.target.classList.contains("custom-checkbox")) {
+        //checkbox state
+        let checkBoxState=e.target.checked;
+        let text=e.target.parentElement.parentElement.childNodes[1];
+        if (checkBoxState===true) { 
+            text.style.textDecoration="line-through"
+        }else{
+            text.style.textDecoration="none"
+        }
+    }
+})
 //Date functionality
 const newDate=()=>{
    let today=new Date();
