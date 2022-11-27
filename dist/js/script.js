@@ -14,10 +14,6 @@ let listItem=document.querySelector('#lists').childNodes;
 let currentEditValue=""
 //array of todos
 let todos=[]
-
-// (function getTodoItems(){
-//    console.log(localStorage.getItem('Mon') ? JSON.parse(localStorage.getItem('Mon')) : '') 
-// })()
 //function that creates list element
 let listElement=(todo_task)=>{
     let task=document.createElement('li');
@@ -56,55 +52,83 @@ let listElement=(todo_task)=>{
 }
 
 //button functionality
-const add=()=>{
-      input.addEventListener('input',()=>{
-        alert.style.display='none';
-      })
-      btn.addEventListener('click',()=>{
-      if (input.value==="") {
-        alert.innerHTML = "Add Task";
-        alert.style.display='block';
-      }else{
-        //conver input value to sentence case
-        (function () {
-          let stringToConvert = input.value;
-          stringToConvert = stringToConvert
-            .toLowerCase()
-            .replace(/(^|\s)\S/, (L) => L.toUpperCase());
-          if (!todos.includes(stringToConvert)) {
-            todos.push(stringToConvert);
-            listElement(todos[todos.length - 1]);
-            if (todos.length>0) {
-                if (localStorage.length<=0) {
-                    localStorage.setItem('Mon', JSON.stringify({todos:todos}));
-                }else{
-                    let addToLocalStorage=todos[todos.length - 1]
-                    let currentStorageItems=JSON.parse(localStorage.getItem('Mon'))
-                    let arrayOfTodos=currentStorageItems.todos
-                    let newTodosArray=arrayOfTodos.concat(addToLocalStorage)
-                    localStorage.setItem('Mon',JSON.stringify({todos:newTodosArray}))
+const add = () => {
+  input.addEventListener("input", () => {
+    alert.style.display = "none";
+  });
+  btn.addEventListener("click", () => {
+    if (input.value === "") {
+      alert.innerHTML = "Add Task";
+      alert.style.display = "block";
+    } else {
+      //conver input value to sentence case
+      (function () {
+        let stringToConvert = input.value;
+        stringToConvert = stringToConvert
+          .toLowerCase()
+          .replace(/(^|\s)\S/, (L) => L.toUpperCase());
+        if (!todos.length) {
+          todos.push({ text: stringToConvert, checked: false });
+          let task = todos[todos.length - 1];
+          localStorage.setItem("Mon", JSON.stringify({ todos: todos }));
+          listElement(task.text);
+        } else {
+            let arrayOfText=[]
+            todos.forEach(element => {
+               arrayOfText.push(element.text) 
+            });
+            if (!arrayOfText.includes(stringToConvert)) {
+              todos.push({ text: stringToConvert, checked: false });
+              let task = todos[todos.length - 1];
+              listElement(task.text);
+              if (todos.length > 0) {
+                if (localStorage.length <= 0) {
+                  localStorage.setItem("Mon", JSON.stringify({ todos: todos }));
+                } else {
+                  let addToLocalStorage = todos[todos.length - 1];
+                  let currentStorageItems = JSON.parse(
+                    localStorage.getItem("Mon")
+                  );
+                  let arrayOfTodos = currentStorageItems.todos;
+                  let newTodosArray = arrayOfTodos.concat(addToLocalStorage);
+                  localStorage.setItem(
+                    "Mon",
+                    JSON.stringify({ todos: newTodosArray })
+                  );
                 }
-                  
               }
-          } else {
-            alert.innerHTML = "Task already added";
-            alert.style.display = "block";
-          }
-        })();
-       
-      } 
-})  
-}
-const loadTodosFromLocalStorage=()=>{
-    let currentStorageItems=JSON.parse(localStorage.getItem('Mon'))
-    let arrayOfTodos=currentStorageItems.todos
-    todos=arrayOfTodos
-    if (todos.length) {
-        todos.forEach(element => {
-            listElement(element)
-        });
+            } else {
+              alert.innerHTML = "Task already added";
+              alert.style.display = "block";
+            }
+        }
+      })();
     }
-}
+  });
+};
+// const loadTodosFromLocalStorage=()=>{
+//     let currentStorageItems=JSON.parse(localStorage.getItem('Mon'))
+//     let arrayOfTodos=currentStorageItems.todos
+//     todos=arrayOfTodos
+//     if (todos.length) {
+//         todos.forEach(element => {
+//             listElement(element)
+//         });
+//     }
+// }
+const loadTodosFromLocalStorage = () => {
+  if (JSON.parse(localStorage.getItem("Mon"))) {
+    let currentStorageItems = JSON.parse(localStorage.getItem("Mon"));
+    let arrayOfTodos = currentStorageItems.todos;
+    todos = arrayOfTodos;
+    if (todos.length) {
+      todos.forEach((element) => {
+        listElement(element.text);
+      });
+    }
+  }
+};
+
 //edit todo
 lists.addEventListener('click',(e)=>{
     if (e.target.classList.contains("fa-pen-to-square")) {
