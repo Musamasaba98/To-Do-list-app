@@ -86,7 +86,8 @@ lists.addEventListener('click',(e)=>{
         editInput.style.display="block";
         button.style.display="block"
         editInput.value=e.target.parentElement.parentElement.childNodes[0].textContent
-        document.querySelector("#lists > li > div.check-text > span").textContent=""
+        console.log(e.target.parentElement.parentElement.firstChild.lastChild.textContent)
+        e.target.parentElement.parentElement.firstChild.lastChild.textContent=""
         currentEditValue=text.value
     }
 })
