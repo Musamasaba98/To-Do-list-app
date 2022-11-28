@@ -15,7 +15,7 @@ let currentEditValue=""
 //array of todos
 let todos=[]
 //function that creates list element
-let listElement=(todo_task)=>{
+let listElement=(todo_task,checker=false,textDecoration="none")=>{
     let task=document.createElement('li');
     let label=document.createElement('label');
     let checkmark=document.createElement('span');
@@ -24,6 +24,7 @@ let listElement=(todo_task)=>{
     let upperDiv=document.createElement('div')
     let icons=document.createElement('div')
     check.setAttribute('type','checkbox')
+    check.setAttribute('checked',checker)
     let editInput=document.createElement('input')
     editInput.setAttribute('type', 'text');
     editInput.className = "editInput";
@@ -31,8 +32,10 @@ let listElement=(todo_task)=>{
     label.className="container"
     checkmark.className="checkmark"
     cover.className="item-text"
+    cover.style.textDecoration=textDecoration
     check.className="custom-checkbox"
     let button=document.createElement('button')
+    check.checked=checker
     button.className = "editBtn";
     button.innerHTML="Edit"
     icons.innerHTML='<i class="fa-regular fa-pen-to-square"></i>'
@@ -71,7 +74,7 @@ const add = () => {
           todos.push({ text: stringToConvert, checked: false });
           let task = todos[todos.length - 1];
           localStorage.setItem("Mon", JSON.stringify({ todos: todos }));
-          listElement(task.text);
+          listElement(task.text,false);
         } else {
             let arrayOfText=[]
             todos.forEach(element => {
@@ -80,7 +83,7 @@ const add = () => {
             if (!arrayOfText.includes(stringToConvert)) {
               todos.push({ text: stringToConvert, checked: false });
               let task = todos[todos.length - 1];
-              listElement(task.text);
+              listElement(task.text,false);
               if (todos.length > 0) {
                 if (localStorage.length <= 0) {
                   localStorage.setItem("Mon", JSON.stringify({ todos: todos }));
@@ -106,16 +109,7 @@ const add = () => {
     }
   });
 };
-// const loadTodosFromLocalStorage=()=>{
-//     let currentStorageItems=JSON.parse(localStorage.getItem('Mon'))
-//     let arrayOfTodos=currentStorageItems.todos
-//     todos=arrayOfTodos
-//     if (todos.length) {
-//         todos.forEach(element => {
-//             listElement(element)
-//         });
-//     }
-// }
+
 const loadTodosFromLocalStorage = () => {
   if (JSON.parse(localStorage.getItem("Mon"))) {
     let currentStorageItems = JSON.parse(localStorage.getItem("Mon"));
@@ -123,7 +117,7 @@ const loadTodosFromLocalStorage = () => {
     todos = arrayOfTodos;
     if (todos.length) {
       todos.forEach((element) => {
-        listElement(element.text);
+        listElement(element.text,element.checked,element.checked?"line-through":"none");
       });
     }
   }
@@ -154,13 +148,23 @@ lists.addEventListener('click',(e)=>{
            e.target.parentElement.childNodes[0].childNodes[1].textContent=value;
            editInput.style.display="none";
            button.style.display="none"
-           
            if (currentEditValue!==value) {
             e.target.parentElement.childNodes[0].childNodes[0].childNodes[0].checked=false
             e.target.parentElement.childNodes[0].childNodes[1].style.textDecoration="none"
-            let index=todos.indexOf(currentEditValue)
-            todos.splice(index,1,value)
-            localStorage.setItem('Mon',JSON.stringify({todos:todos}))
+            let index=todos.findIndex(item=>item.text===currentEditValue)
+            todos.splice(index,1,{text:value,checked:false})
+            localStorage.setItem(
+                    "Mon",
+                    JSON.stringify({ todos: todos })
+                  );
+            // let addToLocalStorage = todos[index];
+            // console.log(add)
+            // let currentStorageItems = JSON.parse(
+            //         localStorage.getItem("Mon")
+            //       );
+            // let arrayOfTodos = currentStorageItems.todos;
+            // let newTodosArray = arrayOfTodos.splice(index,1,addToLocalStorage);      
+                  
            }
            
         }   
@@ -170,7 +174,7 @@ lists.addEventListener('click',(e)=>{
 lists.addEventListener('click',(e)=>{
     if (e.target.classList.contains("fa-trash-can")) {
         let text=e.target.parentElement.parentElement.innerText
-        let index=todos.indexOf(text);
+        let index=todos.findIndex(item=>item.text===text);
         todos.splice(index,1)
         localStorage.setItem('Mon',JSON.stringify({todos:todos}))
         e.target.parentElement.parentElement.remove()
@@ -181,6 +185,7 @@ lists.addEventListener('click',(e)=>{
     if (e.target.classList.contains("custom-checkbox")) {
         //checkbox state
         let checkBoxState=e.target.checked;
+        console.log(checkBoxState)
         let text=e.target.parentElement.parentElement.childNodes[1];
         let todoText=text.textContent
         if (checkBoxState===true) { 
