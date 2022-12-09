@@ -1,40 +1,47 @@
-:root{
-    --image:url("../images/todo.jpg");
+:root {
+    --image: url("../images/todo.jpg");
 }
-*{
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-body{
-    background-image:var(--image) ;
+
+body {
+    background-image: var(--image);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
     background-attachment: fixed;
 }
+
 button {
     background: transparent;
     border: none;
     outline: none;
-  }
-i{
-    padding:0 .5rem;
-}  
-h1{
+}
+
+i {
+    padding: 0 .5rem;
+}
+
+h1 {
     color: white;
     text-shadow: 2.5px 1px 2px black;
     font-weight: bolder;
     margin-bottom: 1rem;
     font-size: 3rem;
-} 
-ul{
+}
+
+ul {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
 }
-li{
+
+li {
     list-style-type: none;
     position: relative;
     background: #3D70F1;
@@ -46,10 +53,12 @@ li{
     border-radius: .5rem;
     font-size: 1.2rem;
     max-width: 100%;
-} 
-.item-text{
+}
+
+.item-text {
     padding-left: 1rem;
 }
+
 /*Implementing a checkmark*/
 .container {
     display: block;
@@ -59,44 +68,44 @@ li{
     cursor: pointer;
     font-size: 22px;
     user-select: none;
-  }
-  
-  .container input {
+}
+
+.container input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
     height: 0;
     width: 0;
-  }
-  
-  .checkmark {
+}
+
+.checkmark {
     position: absolute;
     top: 0;
     left: 0;
     height: 25px;
     width: 25px;
     background-color: #eee;
-  }
-  
-  .container:hover input ~ .checkmark {
+}
+
+.container:hover input~.checkmark {
     background-color: #ccc;
-  }
-  
-  .container input:checked ~ .checkmark {
+}
+
+.container input:checked~.checkmark {
     background-color: #eee;
-  }
-  
-  .checkmark:after {
+}
+
+.checkmark:after {
     content: "";
     position: absolute;
     display: none;
-  }
-  
-  .container input:checked ~ .checkmark:after {
+}
+
+.container input:checked~.checkmark:after {
     display: block;
-  }
-  
-  .container .checkmark:after {
+}
+
+.container .checkmark:after {
     left: 9px;
     top: 5px;
     width: 5px;
@@ -104,52 +113,60 @@ li{
     border: solid #3D70F1;
     border-width: 0 3px 3px 0;
     transform: rotate(45deg);
-  }
- /*end of the checkmark*/ 
-.list-item div{
-    display:flex;
 }
-.main-section{
+
+/*end of the checkmark*/
+.list-item div {
+    display: flex;
+}
+
+.main-section {
     margin: 2rem auto;
     max-width: 100vw;
-}  
-.main-section__input{
+}
+
+.main-section__input {
     display: flex;
     align-items: center;
     justify-content: flex-end;
 }
-.main{
+
+.main {
     display: flex;
     justify-content: flex-end;
     flex-direction: row-reverse;
 
 }
-.text{
+
+.text {
     width: 100%;
-  	height: 30px;
-  	padding: 3px;
-  	font-size: 1.2rem;
+    height: 30px;
+    padding: 3px;
+    font-size: 1.2rem;
     color: rgba(48, 43, 43, 0.952);
     outline: 0;
     border: none;
     background: none;
-  	border-bottom: 3px solid #3D70F1;
+    border-bottom: 3px solid #3D70F1;
 }
-input:focus{
+
+input:focus {
     background: none;
 }
-.editInput{
-    width:15rem;
+
+.editInput {
+    width: 15rem;
     padding: 2px;
     font-size: 1.2rem;
     color: whitesmoke;
     outline: 0;
     border: none;
     background: none;
-    border-bottom: 2px solid rgba(48, 43, 43, 0.952); 
-    display: none; 
+    border-bottom: 2px solid rgba(48, 43, 43, 0.952);
+    display: none;
 }
-.btn{
+
+.btn {
     display: inline;
     color: whitesmoke;
     font-weight: bolder;
@@ -158,42 +175,51 @@ input:focus{
     border: 2px solid whitesmoke;
     border-radius: 1rem;
 }
-.editBtn{
+
+.editBtn {
     display: none;
     color: whitesmoke;
     padding: .3rem .5rem;
     border: 2px solid whitesmoke;
     border-radius: 1rem;
 }
-.todo-tasks{
+
+.todo-tasks {
     margin-top: 1rem;
 }
-.todo-tasks__heading{
+
+.todo-tasks__heading {
     display: flex;
     justify-content: space-between;
     color: black;
 }
-.todo-tasks__heading h4{
+
+.todo-tasks__heading h4 {
     line-height: 1.8rem;
 }
-.todo-tasks span{
+
+.todo-tasks span {
     font-style: normal;
 }
-.fa-pen-to-square{
+
+.fa-pen-to-square {
     color: rgb(112, 218, 129);
     font-size: 1.5rem;
 }
-.fa-trash-can{
+
+.fa-trash-can {
     color: rgb(219, 126, 19);
     font-size: 1.5rem;
 }
-.aside-section{
+
+.aside-section {
     display: none;
     background-color: aliceblue;
     height: 100vh;
     width: 30%;
 }
-.alert{
+
+.alert {
     display: none;
     background-color: red;
     color: white;
